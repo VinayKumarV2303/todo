@@ -27,14 +27,16 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
 DEBUG = os.environ.get("DJANGO_DEBUG", "") == "1"
 
 ALLOWED_HOSTS = [
-    "localhost",
+    "todo-il2c.onrender.com",
     "127.0.0.1",
-    ".onrender.com",  # allow Render domain
+    "localhost",
 ]
 
+
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com",
+    "https://todo-il2c.onrender.com",
 ]
+
 
 
 INSTALLED_APPS = [
