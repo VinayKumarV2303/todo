@@ -1,21 +1,20 @@
-from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from .models import Task
 from .serializers import TaskSerializer
 
 
-def board_view(request):
-    # renders templates/board.html
-    return render(request, "board.html")
-
-
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by("id")
     serializer_class = TaskSerializer
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        developer = self.request.query_params.get("developer")
-        if developer:
-            qs = qs.filter(developer=developer)
-        return qs
+    @action(detail=True, methods=["patch"])
+    def update_status(self, request, pk=None):
+        task = self.get_object()
+        new_status = request.data.get("status")
+        if new_status:
+            task.status = new_status
+            task.save()
+            return Response({"success": True})
+        return Response({"error": "Invalid status"}, status=400)

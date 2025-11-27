@@ -63,7 +63,7 @@ ROOT_URLCONF = 'Todo.urls'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # 👈 this is required
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -76,6 +76,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'Todo.wsgi.application'
 
 
@@ -83,12 +84,12 @@ WSGI_APPLICATION = 'Todo.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL", ""), 
-        conn_max_age=600,
-        ssl_require=True
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
+
 
 
 
