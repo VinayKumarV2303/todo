@@ -10,6 +10,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "description",
             "assignee",
             "status",
+            "day",  
             "due_date",
             "created_at",
         ]

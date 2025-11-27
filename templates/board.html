@@ -10,188 +10,307 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #e0f7fa 0, #f3e5f5 45%, #fff 80%);
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 20px;
+      padding: 24px;
+      color: #1f2933;
     }
 
     .app {
       background: #ffffff;
       width: 100%;
-      max-width: 1000px;
-      min-height: 500px;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      max-width: 1100px;
+      min-height: 520px;
+      border-radius: 18px;
+      box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.18),
+        0 0 0 1px rgba(148, 163, 184, 0.3);
       display: flex;
       overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.35);
     }
+
+    /* SIDEBAR */
 
     .sidebar {
       width: 30%;
-      border-right: 1px solid #eee;
-      background: #fafafa;
-      padding: 16px;
+      background: linear-gradient(160deg, #0f766e 0%, #22c55e 55%, #facc15 110%);
+      padding: 18px 16px;
+      color: #ecfdf5;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .main {
-      width: 70%;
-      padding: 20px;
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      text-align: center;
     }
 
     h1 {
-      margin: 0 0 12px;
+      margin: 0;
       font-size: 22px;
-      text-align: center;
-      color: #333;
-    }
-
-    h2 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      color: #333;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
     }
 
     .subtitle {
-      font-size: 13px;
-      color: #777;
-      text-align: center;
-      margin-bottom: 16px;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.16);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .tag-pill span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #bbf7d0;
     }
 
     .member-list {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 4px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
     }
 
     .member-item {
       padding: 10px 12px;
-      margin-bottom: 8px;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       border: 1px solid transparent;
       display: flex;
       flex-direction: column;
       gap: 2px;
+      background: rgba(15, 23, 42, 0.15);
+      backdrop-filter: blur(6px);
+      transition: all 0.18s ease-out;
     }
 
     .member-item span.name {
       font-size: 14px;
       font-weight: 600;
-      color: #333;
+      color: #f9fafb;
     }
 
     .member-item span.role {
       font-size: 12px;
-      color: #777;
+      color: #e5e7eb;
+      opacity: 0.9;
     }
 
     .member-item:hover {
-      background: #e8f5e9;
-      border-color: #4caf50;
+      background: rgba(15, 23, 42, 0.28);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-1px);
     }
 
     .member-item.active {
-      background: #c8e6c9;
-      border-color: #2e7d32;
+      background: rgba(15, 23, 42, 0.45);
+      border-color: #fef9c3;
+      box-shadow: 0 0 0 1px rgba(250, 250, 250, 0.3);
+    }
+
+    /* MAIN */
+
+    .main {
+      width: 70%;
+      padding: 20px 22px 22px;
+      background: radial-gradient(circle at top left, #e0f2fe 0, #fdf2ff 40%, #ffffff 75%);
+      display: flex;
+      flex-direction: column;
     }
 
     .main-header {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
     }
 
-    .main-header .name {
+    .main-header-left .name {
       font-size: 18px;
-      font-weight: bold;
-      color: #333;
+      font-weight: 700;
+      color: #111827;
     }
 
-    .main-header .role {
+    .main-header-left .role {
       font-size: 13px;
-      color: #777;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .main-header-right {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      background: rgba(219, 234, 254, 0.9);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .main-header-right span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
     }
 
     .progress-container {
-      margin: 12px 0 16px;
+      margin: 10px 0 14px;
     }
 
     .progress-label {
       font-size: 13px;
       margin-bottom: 4px;
-      color: #555;
+      color: #4b5563;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-label span.value {
+      font-weight: 600;
+      font-size: 12px;
+      color: #0f766e;
     }
 
     .progress-bar {
       width: 100%;
       height: 12px;
-      background: #eee;
+      background: #e5e7eb;
       border-radius: 999px;
       overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(148, 163, 184, 0.6);
     }
 
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: #4caf50;
-      transition: width 0.2s ease-out;
+      background: linear-gradient(90deg, #22c55e, #84cc16, #facc15);
+      transition: width 0.25s ease-out;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(226, 232, 240, 0.8);
+      background: #ffffffcf;
+      backdrop-filter: blur(4px);
     }
 
     th, td {
-      padding: 8px 6px;
-      border-bottom: 1px solid #eee;
+      padding: 8px 8px;
+      border-bottom: 1px solid #e5e7eb;
       text-align: left;
     }
 
     th {
-      background: #f5f5f5;
+      background: linear-gradient(90deg, #eff6ff, #ecfdf5);
       font-weight: 600;
+      color: #374151;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     tr:last-child td {
       border-bottom: none;
     }
 
-    select {
-      padding: 4px;
+    tr:nth-child(even) td {
+      background: #f9fafb;
+    }
+
+    tr:hover td {
+      background: #eef2ff;
+    }
+
+    /* Status button pill */
+
+    .status-btn {
+      padding: 4px 10px;
       font-size: 12px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.18s ease-out;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+    }
+
+    .status-btn:active {
+      transform: scale(0.97);
     }
 
     .status-done {
-      color: #2e7d32;
+      color: #166534;
       font-weight: 600;
+      background: #dcfce7;
+      border-color: #bbf7d0;
     }
 
     .status-progress {
-      color: #f57c00;
+      color: #92400e;
       font-weight: 600;
+      background: #ffedd5;
+      border-color: #fed7aa;
     }
 
     .status-todo {
-      color: #757575;
-      font-weight: 600;
+      color: #374151;
+      font-weight: 500;
+      background: #e5e7eb;
+      border-color: #d1d5db;
     }
 
     .empty-state {
       font-size: 13px;
-      color: #777;
+      color: #6b7280;
       text-align: center;
       margin-top: 40px;
     }
 
-    @media (max-width: 768px) {
+    .empty-state span {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
       .app {
         flex-direction: column;
       }
@@ -200,7 +319,7 @@
       }
       .sidebar {
         border-right: none;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.4);
       }
     }
   </style>
@@ -208,33 +327,182 @@
 <body>
   <div class="app">
     <div class="sidebar">
-      <h1>Team Tasks</h1>
-      <div class="subtitle">Select a member to view their tasks</div>
+      <div class="sidebar-header">
+        <h1>Team Tasks</h1>
+        <div class="subtitle">30-day sprint plan for Farmer App</div>
+        <div class="tag-pill">
+          <span class="dot"></span>
+          <span>Live Progress View</span>
+        </div>
+      </div>
       <ul class="member-list" id="memberList"></ul>
     </div>
 
     <div class="main">
       <div id="mainContent">
         <div class="empty-state">
-          👋 Select a team member from the left to see their tasks.
+          <span>👋</span>
+          Select a team member on the left to see their tasks.
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // ====== CONFIG: match your Django Task model ======
-    const API_BASE = "/api/tasks/";  // DRF router: /api/tasks/
-    
-    // These IDs must match Task.assignee values in your model
-    const TEAM_MEMBERS = [
-      { id: "vinay",    name: "Vinay Kumar V",     role: "Admin Dashboard & Analytics" },
-      { id: "yashwanth",name: "Yashwanth H V",    role: "Backend & Database Engineer" },
-      { id: "shashana", name: "Shashanka S",      role: "Frontend & UI Developer" },
-      { id: "lakshman", name: "Lakshmana M R",    role: "Recommendation & Deployment" },
+    // ====== Static 30-day plan data ======
+    const members = [
+      {
+        id: "vinay",
+        name: "Vinay Kumar V",
+        role: "Admin Dashboard & Analytics",
+        tasks: [
+          { day: 1,  title: "Prepare admin feature list", status: "To-Do" },
+          { day: 2,  title: "Admin layout template", status: "To-Do" },
+          { day: 3,  title: "Dashboard skeleton (structure only)", status: "To-Do" },
+          { day: 4,  title: "Crops/Regions UI (static)", status: "To-Do" },
+          { day: 5,  title: "Crop plan management UI", status: "To-Do" },
+          { day: 6,  title: "Dashboard data design (what metrics to show)", status: "To-Do" },
+          { day: 7,  title: "Review week 1 work", status: "To-Do" },
+          { day: 8,  title: "Demand entry page", status: "To-Do" },
+          { day: 9,  title: "List demand entries", status: "To-Do" },
+          { day: 10, title: "Filter UI for demand/crop/region", status: "To-Do" },
+          { day: 11, title: "Link admin UI with DB", status: "To-Do" },
+          { day: 12, title: "Admin permissions (roles)", status: "To-Do" },
+          { day: 13, title: "Summary calculations (totals, averages)", status: "To-Do" },
+          { day: 14, title: "Admin integration check", status: "To-Do" },
+          { day: 15, title: "Add Chart.js to dashboard", status: "To-Do" },
+          { day: 16, title: "Bar chart: Area per crop", status: "To-Do" },
+          { day: 17, title: "Pie chart: Crop share distribution", status: "To-Do" },
+          { day: 18, title: "Metrics cards (key KPIs)", status: "To-Do" },
+          { day: 19, title: "CSV export for reports", status: "To-Do" },
+          { day: 20, title: "Layout improvements", status: "To-Do" },
+          { day: 21, title: "Analytics testing", status: "To-Do" },
+          { day: 22, title: "Fix chart-related bugs", status: "To-Do" },
+          { day: 23, title: "Date filter system", status: "To-Do" },
+          { day: 24, title: "Data correctness check", status: "To-Do" },
+          { day: 25, title: "Usage steps documentation", status: "To-Do" },
+          { day: 26, title: "Format validation (tables/exports)", status: "To-Do" },
+          { day: 27, title: "UI cleanup & final review", status: "To-Do" },
+          { day: 28, title: "Buffer / spillover tasks", status: "To-Do" },
+          { day: 29, title: "Bug fixing & final polish", status: "To-Do" },
+          { day: 30, title: "Final review & handover", status: "To-Do" }
+        ]
+      },
+      {
+        id: "yashwanth",
+        name: "Yashwanth H V",
+        role: "Backend & Database Engineer",
+        tasks: [
+          { day: 1,  title: "Setup Django project & MySQL", status: "To-Do" },
+          { day: 2,  title: "Create apps (accounts, farmer, adminpanel, recommendation)", status: "To-Do" },
+          { day: 3,  title: "Create User & FarmerProfile models + migrations", status: "To-Do" },
+          { day: 4,  title: "Crop, Region, Season models + admin register", status: "To-Do" },
+          { day: 5,  title: "CropPlan model + relations", status: "To-Do" },
+          { day: 6,  title: "Field validations + DB constraints", status: "To-Do" },
+          { day: 7,  title: "Code cleanup & review", status: "To-Do" },
+          { day: 8,  title: "Authentication backend (login, register)", status: "To-Do" },
+          { day: 9,  title: "Farmer dashboard backend logic", status: "To-Do" },
+          { day: 10, title: "Save crop plan logic", status: "To-Do" },
+          { day: 11, title: "List/Create crop plan API endpoints", status: "To-Do" },
+          { day: 12, title: "Add permission checks (farmer vs admin)", status: "To-Do" },
+          { day: 13, title: "Backend unit tests", status: "To-Do" },
+          { day: 14, title: "API documentation draft", status: "To-Do" },
+          { day: 15, title: "Optimize DB queries", status: "To-Do" },
+          { day: 16, title: "Improve dashboard data query performance", status: "To-Do" },
+          { day: 17, title: "Pagination for long lists", status: "To-Do" },
+          { day: 18, title: "Farmer profile edit backend", status: "To-Do" },
+          { day: 19, title: "Server-side validation improvements", status: "To-Do" },
+          { day: 20, title: "Secure admin-only routes", status: "To-Do" },
+          { day: 21, title: "Feature freeze review", status: "To-Do" },
+          { day: 22, title: "Bug fixes", status: "To-Do" },
+          { day: 23, title: "Create 404 & 500 error pages", status: "To-Do" },
+          { day: 24, title: "DB backup test", status: "To-Do" },
+          { day: 25, title: "Code refactor", status: "To-Do" },
+          { day: 26, title: "Write full API docs", status: "To-Do" },
+          { day: 27, title: "Final fixes + review", status: "To-Do" },
+          { day: 28, title: "Buffer / spillover tasks", status: "To-Do" },
+          { day: 29, title: "Bug fixing & final polish", status: "To-Do" },
+          { day: 30, title: "Final review & handover", status: "To-Do" }
+        ]
+      },
+      {
+        id: "shashanka",
+        name: "Shashanka S",
+        role: "Frontend & UI Developer",
+        tasks: [
+          { day: 1,  title: "Define UI theme & mockups", status: "To-Do" },
+          { day: 2,  title: "Create basic HTML/CSS template", status: "To-Do" },
+          { day: 3,  title: "Login/Register UI screens", status: "To-Do" },
+          { day: 4,  title: "Basic form validations (frontend)", status: "To-Do" },
+          { day: 5,  title: "Farmer dashboard layout", status: "To-Do" },
+          { day: 6,  title: "Add Crop Plan UI form", status: "To-Do" },
+          { day: 7,  title: "UI cleanup review", status: "To-Do" },
+          { day: 8,  title: "Connect login/register to backend APIs", status: "To-Do" },
+          { day: 9,  title: "Connect Crop Plan form to backend API", status: "To-Do" },
+          { day: 10, title: "Table view for crop plans", status: "To-Do" },
+          { day: 11, title: "Dynamic crop dropdown (based on DB)", status: "To-Do" },
+          { day: 12, title: "Error/success UI messages", status: "To-Do" },
+          { day: 13, title: "Stats on dashboard (basic cards)", status: "To-Do" },
+          { day: 14, title: "Frontend-backend integration review", status: "To-Do" },
+          { day: 15, title: "Add Bootstrap styling", status: "To-Do" },
+          { day: 16, title: "Recommendation page UI", status: "To-Do" },
+          { day: 17, title: "Badges for suggestions (Good/Balanced/Risk)", status: "To-Do" },
+          { day: 18, title: "Profile page UI", status: "To-Do" },
+          { day: 19, title: "Mobile responsive testing", status: "To-Do" },
+          { day: 20, title: "UX polishing", status: "To-Do" },
+          { day: 21, title: "UI freeze", status: "To-Do" },
+          { day: 22, title: "UI bug fixes", status: "To-Do" },
+          { day: 23, title: "Footer + copyright info", status: "To-Do" },
+          { day: 24, title: "UX feedback fixes", status: "To-Do" },
+          { day: 25, title: "UI refinements", status: "To-Do" },
+          { day: 26, title: "Helper tooltips", status: "To-Do" },
+          { day: 27, title: "Final polish & demo-ready UI", status: "To-Do" },
+          { day: 28, title: "Buffer / spillover tasks", status: "To-Do" },
+          { day: 29, title: "Bug fixing & final polish", status: "To-Do" },
+          { day: 30, title: "Final review & handover", status: "To-Do" }
+        ]
+      },
+      {
+        id: "lakshmana",
+        name: "Lakshmana M R",
+        role: "Recommendation Engine & Deployment",
+        tasks: [
+          { day: 1,  title: "Algorithm research (recommendations)", status: "To-Do" },
+          { day: 2,  title: "Data structure plan", status: "To-Do" },
+          { day: 3,  title: "Yield value sourcing (per crop)", status: "To-Do" },
+          { day: 4,  title: "Pseudo code writing for logic", status: "To-Do" },
+          { day: 5,  title: "Create basic functions for recommendation engine", status: "To-Do" },
+          { day: 6,  title: "Logic testing with sample data", status: "To-Do" },
+          { day: 7,  title: "Review algorithm approach", status: "To-Do" },
+          { day: 8,  title: "API response design (JSON format)", status: "To-Do" },
+          { day: 9,  title: "API endpoint stub for recommendations", status: "To-Do" },
+          { day: 10, title: "Expected supply calculations", status: "To-Do" },
+          { day: 11, title: "Shortage/surplus logic", status: "To-Do" },
+          { day: 12, title: "Sort recommendations list (priority)", status: "To-Do" },
+          { day: 13, title: "Test JSON responses in Postman", status: "To-Do" },
+          { day: 14, title: "Review recommendation logic", status: "To-Do" },
+          { day: 15, title: "Connect recommendation API to UI", status: "To-Do" },
+          { day: 16, title: "Shortage index label logic", status: "To-Do" },
+          { day: 17, title: "Crop ranking optimization", status: "To-Do" },
+          { day: 18, title: "Fake data generation script", status: "To-Do" },
+          { day: 19, title: "Add yield per acre DB support", status: "To-Do" },
+          { day: 20, title: "Setup deployment environment", status: "To-Do" },
+          { day: 21, title: "Test full system (end-to-end)", status: "To-Do" },
+          { day: 22, title: "Performance fixes", status: "To-Do" },
+          { day: 23, title: "Secure deployment variables", status: "To-Do" },
+          { day: 24, title: "Load testing", status: "To-Do" },
+          { day: 25, title: "Setup error logs", status: "To-Do" },
+          { day: 26, title: "Final server setup", status: "To-Do" },
+          { day: 27, title: "Final checks & launch", status: "To-Do" },
+          { day: 28, title: "Buffer / spillover tasks", status: "To-Do" },
+          { day: 29, title: "Bug fixing & final polish", status: "To-Do" },
+          { day: 30, title: "Final review & handover", status: "To-Do" }
+        ]
+      }
     ];
 
-    // Map between API status values and UI labels
+    const API_BASE = "/api/tasks/";
+
     const STATUS_API_TO_LABEL = {
       "todo": "To-Do",
       "in_progress": "In Progress",
@@ -247,12 +515,12 @@
       "Done": "done",
     };
 
-    // ====== Local cache & DOM refs ======
-    let allTasks = [];  // full list from API
+    const STATUS_LABELS = ["To-Do", "In Progress", "Done"];
+
+    let allApiTasks = [];
     const memberListEl = document.getElementById("memberList");
     const mainContentEl = document.getElementById("mainContent");
 
-    // ====== CSRF helper for Django PATCH/POST ======
     function getCookie(name) {
       let cookieValue = null;
       if (document.cookie && document.cookie !== "") {
@@ -268,40 +536,19 @@
       return cookieValue;
     }
 
-    // ====== LocalStorage helpers (C) ======
-    function saveTasksToLocal() {
-      try {
-        localStorage.setItem("tasks", JSON.stringify(allTasks));
-      } catch (e) {
-        console.warn("Could not write tasks to localStorage", e);
-      }
-    }
-
-    function loadTasksFromLocal() {
-      try {
-        const raw = localStorage.getItem("tasks");
-        return raw ? JSON.parse(raw) : [];
-      } catch (e) {
-        console.warn("Could not read tasks from localStorage", e);
-        return [];
-      }
-    }
-
-    // ====== API calls (A) ======
     async function fetchTasksFromAPI() {
       try {
-        const response = await fetch(API_BASE);
-        if (!response.ok) throw new Error("API error " + response.status);
-        const data = await response.json();
-        allTasks = data;
-        saveTasksToLocal();
+        const res = await fetch(API_BASE);
+        if (!res.ok) throw new Error("API error " + res.status);
+        allApiTasks = await res.json();
       } catch (err) {
-        console.error("API failed, falling back to localStorage:", err);
-        allTasks = loadTasksFromLocal();
+        console.error("Failed to fetch tasks from API:", err);
+        allApiTasks = [];
       }
     }
 
     async function updateTaskStatusOnServer(taskId, newStatusApi) {
+      if (!taskId) return;
       try {
         await fetch(`${API_BASE}${taskId}/`, {
           method: "PATCH",
@@ -312,15 +559,32 @@
           body: JSON.stringify({ status: newStatusApi }),
         });
       } catch (err) {
-        console.error("Failed to update task on server", err);
+        console.error("Failed to update task on server:", err);
       }
     }
 
-    // ====== UI helpers ======
-    function computeProgress(tasks) {
-      if (!tasks.length) return 0;
-      const doneCount = tasks.filter(t => t.status === "Done").length;
-      return Math.round((doneCount / tasks.length) * 100);
+    function syncApiToStatic() {
+      members.forEach(member => {
+        const apiTasksForMember = allApiTasks.filter(
+          t => t.assignee === member.id
+        );
+        member.tasks.forEach(task => {
+          const match = apiTasksForMember.find(
+            t => t.title === task.title
+          );
+          if (match) {
+            task.apiId = match.id;
+            if (match.status && STATUS_API_TO_LABEL[match.status]) {
+              task.status = STATUS_API_TO_LABEL[match.status];
+            }
+            if (match.day != null) {
+              task.day = match.day;
+            }
+          } else {
+            task.apiId = null;
+          }
+        });
+      });
     }
 
     function statusClass(status) {
@@ -329,24 +593,15 @@
       return "status-todo";
     }
 
-    function getTasksForMember(memberId) {
-      // Filter tasks from the global list and map to UI format
-      const tasks = allTasks
-        .filter(t => t.assignee === memberId)
-        .map(t => ({
-          id: t.id,
-          title: t.title,
-          status: STATUS_API_TO_LABEL[t.status] || "To-Do",
-          due: t.due_date || "",
-        }));
-
-      return tasks;
+    function computeProgress(tasks) {
+      if (!tasks.length) return 0;
+      const doneCount = tasks.filter(t => t.status === "Done").length;
+      return Math.round((doneCount / tasks.length) * 100);
     }
 
-    // ====== Render functions ======
     function renderMemberList() {
       memberListEl.innerHTML = "";
-      TEAM_MEMBERS.forEach(member => {
+      members.forEach(member => {
         const li = document.createElement("li");
         li.className = "member-item";
         li.dataset.id = member.id;
@@ -375,17 +630,19 @@
     }
 
     function renderMemberDetails(memberId) {
-      const member = TEAM_MEMBERS.find(m => m.id === memberId);
+      const member = members.find(m => m.id === memberId);
       if (!member) return;
 
-      const memberTasks = getTasksForMember(memberId);
-      const progress = computeProgress(memberTasks);
+      const tasks = member.tasks.slice().sort((a, b) => (a.day || 0) - (b.day || 0));
+      const progress = computeProgress(tasks);
 
       mainContentEl.innerHTML = "";
 
-      // Header
       const headerDiv = document.createElement("div");
       headerDiv.className = "main-header";
+
+      const left = document.createElement("div");
+      left.className = "main-header-left";
 
       const nameEl = document.createElement("div");
       nameEl.className = "name";
@@ -395,16 +652,33 @@
       roleEl.className = "role";
       roleEl.textContent = member.role;
 
-      headerDiv.appendChild(nameEl);
-      headerDiv.appendChild(roleEl);
+      left.appendChild(nameEl);
+      left.appendChild(roleEl);
 
-      // Progress
+      const right = document.createElement("div");
+      right.className = "main-header-right";
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      const txt = document.createElement("span");
+      txt.textContent = "Sprint Overview";
+      right.appendChild(dot);
+      right.appendChild(txt);
+
+      headerDiv.appendChild(left);
+      headerDiv.appendChild(right);
+
       const progressContainer = document.createElement("div");
       progressContainer.className = "progress-container";
 
       const progressLabel = document.createElement("div");
       progressLabel.className = "progress-label";
-      progressLabel.innerHTML = `<span>Task Progress</span><span>${progress}% complete</span>`;
+      const labelLeft = document.createElement("span");
+      labelLeft.textContent = "30-day Plan Progress";
+      const labelRight = document.createElement("span");
+      labelRight.className = "value";
+      labelRight.textContent = `${progress}% complete`;
+      progressLabel.appendChild(labelLeft);
+      progressLabel.appendChild(labelRight);
 
       const progressBar = document.createElement("div");
       progressBar.className = "progress-bar";
@@ -417,12 +691,11 @@
       progressContainer.appendChild(progressLabel);
       progressContainer.appendChild(progressBar);
 
-      // Table
       const table = document.createElement("table");
       const thead = document.createElement("thead");
       const headerRow = document.createElement("tr");
 
-      ["Task", "Status", "End Date"].forEach(text => {
+      ["Day", "Task", "Status"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
         headerRow.appendChild(th);
@@ -433,52 +706,44 @@
 
       const tbody = document.createElement("tbody");
 
-      memberTasks.forEach(task => {
+      tasks.forEach(task => {
         const tr = document.createElement("tr");
+
+        const dayTd = document.createElement("td");
+        dayTd.textContent =
+          task.day != null && task.day !== "" ? `Day ${task.day}` : "-";
 
         const titleTd = document.createElement("td");
         titleTd.textContent = task.title;
 
         const statusTd = document.createElement("td");
-        const select = document.createElement("select");
+        const btn = document.createElement("button");
+        btn.className = "status-btn " + statusClass(task.status);
+        btn.textContent = task.status;
 
-        ["To-Do", "In Progress", "Done"].forEach(optText => {
-          const opt = document.createElement("option");
-          opt.value = optText;
-          opt.textContent = optText;
-          if (optText === task.status) opt.selected = true;
-          select.appendChild(opt);
-        });
+        btn.addEventListener("click", async () => {
+          // cycle status
+          let idx = STATUS_LABELS.indexOf(task.status);
+          if (idx === -1) idx = 0;
+          idx = (idx + 1) % STATUS_LABELS.length;
+          task.status = STATUS_LABELS[idx];
 
-        select.className = statusClass(task.status);
+          btn.textContent = task.status;
+          btn.className = "status-btn " + statusClass(task.status);
 
-        select.addEventListener("change", async () => {
-          // Update local UI status
-          task.status = select.value;
-          select.className = statusClass(task.status);
-
-          const newProgress = computeProgress(memberTasks);
+          const newProgress = computeProgress(tasks);
           progressFill.style.width = newProgress + "%";
-          progressLabel.innerHTML = `<span>Task Progress</span><span>${newProgress}% complete</span>`;
+          labelRight.textContent = `${newProgress}% complete`;
 
-          // Update global cache + server
           const apiStatus = STATUS_LABEL_TO_API[task.status] || "todo";
-          const globalTask = allTasks.find(t => t.id === task.id);
-          if (globalTask) {
-            globalTask.status = apiStatus;
-            saveTasksToLocal();
-          }
-          await updateTaskStatusOnServer(task.id, apiStatus);
+          await updateTaskStatusOnServer(task.apiId, apiStatus);
         });
 
-        statusTd.appendChild(select);
+        statusTd.appendChild(btn);
 
-        const dueTd = document.createElement("td");
-        dueTd.textContent = task.due || "-";
-
+        tr.appendChild(dayTd);
         tr.appendChild(titleTd);
         tr.appendChild(statusTd);
-        tr.appendChild(dueTd);
 
         tbody.appendChild(tr);
       });
@@ -487,27 +752,26 @@
 
       mainContentEl.appendChild(headerDiv);
       mainContentEl.appendChild(progressContainer);
-      mainContentEl.appendChild(table);
 
-      if (!memberTasks.length) {
+      if (tasks.length) {
+        mainContentEl.appendChild(table);
+      } else {
         const empty = document.createElement("div");
         empty.className = "empty-state";
-        empty.textContent = "No tasks found for this member. Add some in Django admin.";
+        empty.innerHTML = "<span>📝</span>No tasks defined for this member.";
         mainContentEl.appendChild(empty);
       }
     }
 
-    // ====== Init ======
     (async function init() {
       renderMemberList();
       await fetchTasksFromAPI();
-      // Optionally auto-select first member:
-      const first = TEAM_MEMBERS[0];
+      syncApiToStatic();
+
+      const first = members[0];
       if (first) {
         const firstLi = document.querySelector(`.member-item[data-id="${first.id}"]`);
-        if (firstLi) {
-          firstLi.classList.add("active");
-        }
+        if (firstLi) firstLi.classList.add("active");
         renderMemberDetails(first.id);
       }
     })();
