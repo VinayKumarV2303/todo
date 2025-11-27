@@ -1,20 +1,27 @@
+from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
+
 from .models import Task
 from .serializers import TaskSerializer
 
 
+# 🧩 Simple view to show your Task Board page
+def board_view(request):
+    # if your template is at templates/board.html use this:
+    return render(request, "board.html")
+
+    # OR if it's at templates/board/board.html then use:
+    # return render(request, "board/board.html")
+
+
+# 🔁 API ViewSet for Tasks
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all().order_by("id")
+    queryset = Task.objects.all().order_by("due_date", "id")
     serializer_class = TaskSerializer
 
-    @action(detail=True, methods=["patch"])
-    def update_status(self, request, pk=None):
-        task = self.get_object()
-        new_status = request.data.get("status")
-        if new_status:
-            task.status = new_status
-            task.save()
-            return Response({"success": True})
-        return Response({"error": "Invalid status"}, status=400)
+    def get_queryset(self):
+        qs = super().get_queryset()
+        assignee = self.request.query_params.get("assignee")
+        if assignee:
+            qs = qs.filter(assignee=assignee)
+        return qs

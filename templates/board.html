@@ -1,702 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Farmer App - Task Assignment Board</title>
-
-  <!-- Bootstrap 5 CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
-
+  <meta charset="UTF-8" />
+  <title>Team Task Dashboard</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #f5f7fb;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
     }
 
-    header {
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    }
-
-    .dev-role {
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    .dev-badge {
-      font-size: 0.75rem;
-    }
-
-    /* Status pills */
-    .status-pill {
-      cursor: pointer;
-      font-size: 0.75rem;
-      border-radius: 999px;
-      padding: 0.15rem 0.6rem;
-      font-weight: 600;
-      border: 1px solid transparent;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .status-todo {
-      background: #fff4e5;
-      color: #b86800;
-      border-color: #ffe0b3;
-    }
-
-    .status-progress {
-      background: #e6f0ff;
-      color: #2556b3;
-      border-color: #c2d6ff;
-    }
-
-    .status-review {
-      background: #fff0f4;
-      color: #b3255b;
-      border-color: #ffc2d6;
-    }
-
-    .status-done {
-      background: #e6f7ed;
-      color: #207544;
-      border-color: #bde6c8;
-      text-decoration: line-through;
-    }
-
-    /* Week colors */
-    .week-label {
-      font-size: 0.7rem;
-      border-radius: 999px;
-      padding: 0.15rem 0.6rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .week-1 { background: #e7f1ff; color: #245b9e; }
-    .week-2 { background: #e5f7ef; color: #1a7a4a; }
-    .week-3 { background: #fff2e0; color: #b86800; }
-    .week-4 { background: #f4e9ff; color: #6b2ca8; }
-
-    .card {
+    .app {
+      background: #ffffff;
+      width: 100%;
+      max-width: 1000px;
+      min-height: 500px;
       border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      display: flex;
+      overflow: hidden;
     }
 
-    .card-header {
-      border-radius: 12px 12px 0 0 !important;
+    .sidebar {
+      width: 30%;
+      border-right: 1px solid #eee;
+      background: #fafafa;
+      padding: 16px;
+    }
+
+    .main {
+      width: 70%;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      text-align: center;
+      color: #333;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #777;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .member-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .member-item {
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .member-item span.name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .member-item span.role {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .member-item:hover {
+      background: #e8f5e9;
+      border-color: #4caf50;
+    }
+
+    .member-item.active {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+    }
+
+    .main-header {
+      margin-bottom: 16px;
+    }
+
+    .main-header .name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .main-header .role {
+      font-size: 13px;
+      color: #777;
+    }
+
+    .progress-container {
+      margin: 12px 0 16px;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #eee;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #4caf50;
+      transition: width 0.2s ease-out;
     }
 
     table {
-      font-size: 0.8rem;
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
     }
 
-    .dev-page {
-      display: none;
+    th, td {
+      padding: 8px 6px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
     }
 
-    .dev-page.active {
-      display: block;
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
     }
 
-    .dev-progress-wrapper {
-      margin-top: 0.5rem;
+    tr:last-child td {
+      border-bottom: none;
     }
 
-    .dev-progress-label {
-      font-size: 0.75rem;
-      color: #555;
-      margin-bottom: 0.15rem;
+    select {
+      padding: 4px;
+      font-size: 12px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
 
-    .project-progress-card {
-      border-radius: 12px;
+    .status-done {
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    .status-progress {
+      color: #f57c00;
+      font-weight: 600;
+    }
+
+    .status-todo {
+      color: #757575;
+      font-weight: 600;
+    }
+
+    .empty-state {
+      font-size: 13px;
+      color: #777;
+      text-align: center;
+      margin-top: 40px;
     }
 
     @media (max-width: 768px) {
-      .col-week, .col-day {
-        display: none;
+      .app {
+        flex-direction: column;
+      }
+      .sidebar, .main {
+        width: 100%;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #eee;
       }
     }
   </style>
 </head>
 <body>
-<header class="bg-primary text-white py-3 mb-4">
-  <div class="container">
-    <h1 class="h3 mb-1">Farmer App – Task Assignment Board</h1>
-    <p class="mb-0 small">
-      4-Week Plan · Developers:
-      Vinay (Admin) ·
-      Yashwanth (Backend) ·
-      Shashana (Frontend) ·
-      Lakshman (DevOps)
-    </p>
-  </div>
-</header>
+  <div class="app">
+    <div class="sidebar">
+      <h1>Team Tasks</h1>
+      <div class="subtitle">Select a member to view their tasks</div>
+      <ul class="member-list" id="memberList"></ul>
+    </div>
 
-<div class="container mb-5">
-
-  <!-- Overall project progress -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="card shadow-sm border-0 project-progress-card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="fw-semibold">Overall Project Progress</span>
-            <span id="project-progress-text" class="small text-muted">0%</span>
-          </div>
-          <div class="progress" style="height: 10px;">
-            <div
-              class="progress-bar"
-              id="project-progress"
-              role="progressbar"
-              style="width: 0%;"
-              aria-valuenow="0"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
+    <div class="main">
+      <div id="mainContent">
+        <div class="empty-state">
+          👋 Select a team member from the left to see their tasks.
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Developer selector -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="btn-group w-100" role="group">
-        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="vinay">
-          👨‍💻 Vinay (Admin)
-        </button>
-        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="yashwanth">
-          🧑‍💻 Yashwanth (Backend)
-        </button>
-        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="shashana">
-          🎨 Shashana (Frontend)
-        </button>
-        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="lakshman">
-          🤖 Lakshman (DevOps)
-        </button>
-      </div>
-    </div>
-  </div>
+  <script>
+    // ====== CONFIG: match your Django Task model ======
+    const API_BASE = "/api/tasks/";  // DRF router: /api/tasks/
+    
+    // These IDs must match Task.assignee values in your model
+    const TEAM_MEMBERS = [
+      { id: "vinay",    name: "Vinay Kumar V",     role: "Admin Dashboard & Analytics" },
+      { id: "yashwanth",name: "Yashwanth H V",    role: "Backend & Database Engineer" },
+      { id: "shashana", name: "Shashanka S",      role: "Frontend & UI Developer" },
+      { id: "lakshman", name: "Lakshmana M R",    role: "Recommendation & Deployment" },
+    ];
 
-  <!-- Vinay page -->
-  <div class="dev-page" data-dev="vinay">
-    <div class="card shadow-sm border-0">
-      <div class="card-header bg-white">
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <div class="fw-bold">👨‍💻 Vinay</div>
-            <div class="dev-role">Admin · Panel & Analytics</div>
-          </div>
-          <span class="badge text-bg-primary dev-badge">Admin Panel</span>
-        </div>
-        <div class="dev-progress-wrapper">
-          <div class="dev-progress-label">Vinay Progress</div>
-          <div class="progress" style="height: 6px;">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-              style="width: 0%;"
-              data-dev-progress="vinay"
-            ></div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover mb-0 align-middle">
-            <thead class="table-light">
-            <tr>
-              <th>Status</th>
-              <th>Task</th>
-              <th class="col-week">Week</th>
-              <th class="col-day">Day</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Week 1 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Prepare admin feature list</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 1</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Admin layout template</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 2</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Dashboard skeleton (structure only)</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 3</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Crops/Regions UI (static)</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 4</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Crop plan management UI</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 5</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Dashboard data design (what metrics to show)</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 6</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Review week 1 work</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 7</td>
-            </tr>
+    // Map between API status values and UI labels
+    const STATUS_API_TO_LABEL = {
+      "todo": "To-Do",
+      "in_progress": "In Progress",
+      "done": "Done",
+    };
 
-            <!-- Week 2 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Demand entry page</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 8</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>List demand entries</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 9</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Filter UI for demand/crop/region</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 10</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Link admin UI with DB</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 11</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Admin permissions (roles)</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 12</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Summary calculations (totals, averages)</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 13</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Admin integration check</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 14</td>
-            </tr>
+    const STATUS_LABEL_TO_API = {
+      "To-Do": "todo",
+      "In Progress": "in_progress",
+      "Done": "done",
+    };
 
-            <!-- Week 3 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Add Chart.js to dashboard</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 15</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Bar chart: Area per crop</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 16</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Pie chart: Crop share distribution</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 17</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Metrics cards (key KPIs)</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 18</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>CSV export for reports</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 19</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Layout improvements</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 20</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Analytics testing</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 21</td>
-            </tr>
+    // ====== Local cache & DOM refs ======
+    let allTasks = [];  // full list from API
+    const memberListEl = document.getElementById("memberList");
+    const mainContentEl = document.getElementById("mainContent");
 
-            <!-- Week 4 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Fix chart-related bugs</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 22</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Date filter system</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 23</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Data correctness check</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 24</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Usage steps documentation</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 25</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Format validation (tables/exports)</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 26</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>UI cleanup &amp; final review</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 27–30</td>
-            </tr>
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Yashwanth page (Backend) -->
-  <div class="dev-page" data-dev="yashwanth">
-    <div class="card shadow-sm border-0">
-      <div class="card-header bg-white">
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <div class="fw-bold">🧑‍💻 Yashwanth</div>
-            <div class="dev-role">Backend · Django & MySQL</div>
-          </div>
-          <span class="badge text-bg-info dev-badge">Backend</span>
-        </div>
-        <div class="dev-progress-wrapper">
-          <div class="dev-progress-label">Yashwanth Progress</div>
-          <div class="progress" style="height: 6px;">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-              style="width: 0%;"
-              data-dev-progress="yashwanth"
-            ></div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover mb-0 align-middle">
-            <thead class="table-light">
-            <tr>
-              <th>Status</th>
-              <th>Task</th>
-              <th class="col-week">Week</th>
-              <th class="col-day">Day</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Week 1 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Setup Django project &amp; MySQL</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 1</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Create apps (accounts, farmer, adminpanel, recommendation)</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 2</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Create <strong>User</strong> &amp; <strong>FarmerProfile</strong> models + migrations</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 3</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Crop, Region, Season models + admin register</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 4</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>CropPlan model + relations</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 5</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Field validations + DB constraints</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 6</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Code cleanup &amp; review</td>
-              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
-              <td class="col-day">Day 7</td>
-            </tr>
-
-            <!-- Week 2 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Authentication backend (login, register)</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 8</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Farmer dashboard backend logic</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 9</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Save crop plan logic</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 10</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>List/Create crop plan API endpoints</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 11</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Add permission checks (farmer vs admin)</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 12</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Backend unit tests</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 13</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>API documentation draft</td>
-              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
-              <td class="col-day">Day 14</td>
-            </tr>
-
-            <!-- Week 3 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Optimize DB queries</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 15</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Improve dashboard data query performance</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 16</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Pagination for long lists</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 17</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Farmer profile edit backend</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 18</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Server-side validation improvements</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 19</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Secure admin-only routes</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 20</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Feature freeze review</td>
-              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
-              <td class="col-day">Day 21</td>
-            </tr>
-
-            <!-- Week 4 -->
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Bug fixes</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 22</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Create 404 &amp; 500 error pages</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 23</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>DB backup test</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 24</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Code refactor</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 25</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Write full API docs</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 26</td>
-            </tr>
-            <tr>
-              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
-              <td>Final fixes + review</td>
-              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
-              <td class="col-day">Day 27–30</td>
-            </tr>
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Shashana page (Frontend) -->
-  <div class="dev-page" data-dev="shashana">
-    <!-- … keep exactly the Shashana block you pasted earlier … -->
-    <!-- (all her Week 1–4 tasks, same structure as above) -->
-  </div>
-
-  <!-- Lakshman page (DevOps + Recommendation) -->
-  <div class="dev-page" data-dev="lakshman">
-    <!-- … keep exactly the Lakshman block you pasted earlier … -->
-    <!-- (all his Week 1–4 tasks) -->
-  </div>
-
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Status logic + dev switch + localStorage + progress bars -->
-<script>
-(function () {
-
-  const order = ["todo", "progress", "review", "done"];
-  const labels = {
-    "todo": "To-Do",
-    "progress": "In Progress",
-    "review": "Review",
-    "done": "Done"
-  };
-
-  const API_GET = "/api/tasks/";
-  const API_PATCH = (id) => `/api/tasks/${id}/`;
-
-  const allPills = Array.from(document.querySelectorAll(".status-pill"));
-
-  function updateClass(el, newStatus) {
-    el.classList.remove("status-todo", "status-progress", "status-review", "status-done");
-    el.classList.add("status-" + newStatus);
-    el.textContent = labels[newStatus];
-    el.dataset.status = newStatus;
-  }
-
-  async function loadTasks() {
-    try {
-      const resp = await fetch(API_GET);
-      const tasks = await resp.json();
-
-      tasks.forEach((task) => {
-        const pill = document.querySelector(`.status-pill[data-title='${task.title}']`);
-        if (pill) {
-          pill.dataset.taskId = task.id;
-          updateClass(pill, task.status);
+    // ====== CSRF helper for Django PATCH/POST ======
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + "=")) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
         }
-      });
-    } catch (e) {
-      console.error("Load error:", e);
+      }
+      return cookieValue;
     }
-  }
 
-  async function updateStatus(id, newStatus) {
-    try {
-      await fetch(API_PATCH(id), {
-        method: "PATCH",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({status: newStatus}),
-      });
-    } catch (e) {
-      console.error("Update error:", e);
+    // ====== LocalStorage helpers (C) ======
+    function saveTasksToLocal() {
+      try {
+        localStorage.setItem("tasks", JSON.stringify(allTasks));
+      } catch (e) {
+        console.warn("Could not write tasks to localStorage", e);
+      }
     }
-  }
 
-  allPills.forEach(pill => {
-    pill.addEventListener("click", async () => {
-      const current = pill.dataset.status || "todo";
-      const idx = order.indexOf(current);
-      const next = order[(idx + 1) % order.length];
-      updateClass(pill, next);
+    function loadTasksFromLocal() {
+      try {
+        const raw = localStorage.getItem("tasks");
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.warn("Could not read tasks from localStorage", e);
+        return [];
+      }
+    }
 
-      const id = pill.dataset.taskId;
-      if (id) await updateStatus(id, next);
-    });
-  });
+    // ====== API calls (A) ======
+    async function fetchTasksFromAPI() {
+      try {
+        const response = await fetch(API_BASE);
+        if (!response.ok) throw new Error("API error " + response.status);
+        const data = await response.json();
+        allTasks = data;
+        saveTasksToLocal();
+      } catch (err) {
+        console.error("API failed, falling back to localStorage:", err);
+        allTasks = loadTasksFromLocal();
+      }
+    }
 
-  loadTasks();
-})();
-</script>
+    async function updateTaskStatusOnServer(taskId, newStatusApi) {
+      try {
+        await fetch(`${API_BASE}${taskId}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: JSON.stringify({ status: newStatusApi }),
+        });
+      } catch (err) {
+        console.error("Failed to update task on server", err);
+      }
+    }
 
+    // ====== UI helpers ======
+    function computeProgress(tasks) {
+      if (!tasks.length) return 0;
+      const doneCount = tasks.filter(t => t.status === "Done").length;
+      return Math.round((doneCount / tasks.length) * 100);
+    }
 
+    function statusClass(status) {
+      if (status === "Done") return "status-done";
+      if (status === "In Progress") return "status-progress";
+      return "status-todo";
+    }
+
+    function getTasksForMember(memberId) {
+      // Filter tasks from the global list and map to UI format
+      const tasks = allTasks
+        .filter(t => t.assignee === memberId)
+        .map(t => ({
+          id: t.id,
+          title: t.title,
+          status: STATUS_API_TO_LABEL[t.status] || "To-Do",
+          due: t.due_date || "",
+        }));
+
+      return tasks;
+    }
+
+    // ====== Render functions ======
+    function renderMemberList() {
+      memberListEl.innerHTML = "";
+      TEAM_MEMBERS.forEach(member => {
+        const li = document.createElement("li");
+        li.className = "member-item";
+        li.dataset.id = member.id;
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "name";
+        nameSpan.textContent = member.name;
+
+        const roleSpan = document.createElement("span");
+        roleSpan.className = "role";
+        roleSpan.textContent = member.role;
+
+        li.appendChild(nameSpan);
+        li.appendChild(roleSpan);
+
+        li.addEventListener("click", () => {
+          document.querySelectorAll(".member-item").forEach(item => {
+            item.classList.remove("active");
+          });
+          li.classList.add("active");
+          renderMemberDetails(member.id);
+        });
+
+        memberListEl.appendChild(li);
+      });
+    }
+
+    function renderMemberDetails(memberId) {
+      const member = TEAM_MEMBERS.find(m => m.id === memberId);
+      if (!member) return;
+
+      const memberTasks = getTasksForMember(memberId);
+      const progress = computeProgress(memberTasks);
+
+      mainContentEl.innerHTML = "";
+
+      // Header
+      const headerDiv = document.createElement("div");
+      headerDiv.className = "main-header";
+
+      const nameEl = document.createElement("div");
+      nameEl.className = "name";
+      nameEl.textContent = member.name;
+
+      const roleEl = document.createElement("div");
+      roleEl.className = "role";
+      roleEl.textContent = member.role;
+
+      headerDiv.appendChild(nameEl);
+      headerDiv.appendChild(roleEl);
+
+      // Progress
+      const progressContainer = document.createElement("div");
+      progressContainer.className = "progress-container";
+
+      const progressLabel = document.createElement("div");
+      progressLabel.className = "progress-label";
+      progressLabel.innerHTML = `<span>Task Progress</span><span>${progress}% complete</span>`;
+
+      const progressBar = document.createElement("div");
+      progressBar.className = "progress-bar";
+
+      const progressFill = document.createElement("div");
+      progressFill.className = "progress-fill";
+      progressFill.style.width = progress + "%";
+
+      progressBar.appendChild(progressFill);
+      progressContainer.appendChild(progressLabel);
+      progressContainer.appendChild(progressBar);
+
+      // Table
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const headerRow = document.createElement("tr");
+
+      ["Task", "Status", "End Date"].forEach(text => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        headerRow.appendChild(th);
+      });
+
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+
+      memberTasks.forEach(task => {
+        const tr = document.createElement("tr");
+
+        const titleTd = document.createElement("td");
+        titleTd.textContent = task.title;
+
+        const statusTd = document.createElement("td");
+        const select = document.createElement("select");
+
+        ["To-Do", "In Progress", "Done"].forEach(optText => {
+          const opt = document.createElement("option");
+          opt.value = optText;
+          opt.textContent = optText;
+          if (optText === task.status) opt.selected = true;
+          select.appendChild(opt);
+        });
+
+        select.className = statusClass(task.status);
+
+        select.addEventListener("change", async () => {
+          // Update local UI status
+          task.status = select.value;
+          select.className = statusClass(task.status);
+
+          const newProgress = computeProgress(memberTasks);
+          progressFill.style.width = newProgress + "%";
+          progressLabel.innerHTML = `<span>Task Progress</span><span>${newProgress}% complete</span>`;
+
+          // Update global cache + server
+          const apiStatus = STATUS_LABEL_TO_API[task.status] || "todo";
+          const globalTask = allTasks.find(t => t.id === task.id);
+          if (globalTask) {
+            globalTask.status = apiStatus;
+            saveTasksToLocal();
+          }
+          await updateTaskStatusOnServer(task.id, apiStatus);
+        });
+
+        statusTd.appendChild(select);
+
+        const dueTd = document.createElement("td");
+        dueTd.textContent = task.due || "-";
+
+        tr.appendChild(titleTd);
+        tr.appendChild(statusTd);
+        tr.appendChild(dueTd);
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+
+      mainContentEl.appendChild(headerDiv);
+      mainContentEl.appendChild(progressContainer);
+      mainContentEl.appendChild(table);
+
+      if (!memberTasks.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.textContent = "No tasks found for this member. Add some in Django admin.";
+        mainContentEl.appendChild(empty);
+      }
+    }
+
+    // ====== Init ======
+    (async function init() {
+      renderMemberList();
+      await fetchTasksFromAPI();
+      // Optionally auto-select first member:
+      const first = TEAM_MEMBERS[0];
+      if (first) {
+        const firstLi = document.querySelector(`.member-item[data-id="${first.id}"]`);
+        if (firstLi) {
+          firstLi.classList.add("active");
+        }
+        renderMemberDetails(first.id);
+      }
+    })();
+  </script>
 </body>
 </html>
