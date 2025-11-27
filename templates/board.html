@@ -74,25 +74,10 @@
       white-space: nowrap;
     }
 
-    .week-1 {
-      background: #e7f1ff;
-      color: #245b9e;
-    }
-
-    .week-2 {
-      background: #e5f7ef;
-      color: #1a7a4a;
-    }
-
-    .week-3 {
-      background: #fff2e0;
-      color: #b86800;
-    }
-
-    .week-4 {
-      background: #f4e9ff;
-      color: #6b2ca8;
-    }
+    .week-1 { background: #e7f1ff; color: #245b9e; }
+    .week-2 { background: #e5f7ef; color: #1a7a4a; }
+    .week-3 { background: #fff2e0; color: #b86800; }
+    .week-4 { background: #f4e9ff; color: #6b2ca8; }
 
     .card {
       border-radius: 12px;
@@ -176,7 +161,7 @@
     </div>
   </div>
 
-  <!-- Developer selector (only names at first) -->
+  <!-- Developer selector -->
   <div class="row mb-4">
     <div class="col-12">
       <div class="btn-group w-100" role="group">
@@ -196,7 +181,7 @@
     </div>
   </div>
 
-  <!-- Vinay page (Admin / Analytics tasks) -->
+  <!-- Vinay page -->
   <div class="dev-page" data-dev="vinay">
     <div class="card shadow-sm border-0">
       <div class="card-header bg-white">
@@ -234,7 +219,7 @@
             </tr>
             </thead>
             <tbody>
-            <!-- Week 1 (Admin tasks) -->
+            <!-- Week 1 -->
             <tr>
               <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
               <td>Prepare admin feature list</td>
@@ -412,16 +397,238 @@
   </div>
 
   <!-- Yashwanth page (Backend) -->
-  <!-- (rest of your HTML continues exactly as you pasted, for Yashwanth, Shashana, Lakshman) -->
-  <!-- I’ve truncated here to save space – just keep everything you already pasted from there down,
-       unchanged, including the JS at the bottom. -->
-  
+  <div class="dev-page" data-dev="yashwanth">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-bold">🧑‍💻 Yashwanth</div>
+            <div class="dev-role">Backend · Django & MySQL</div>
+          </div>
+          <span class="badge text-bg-info dev-badge">Backend</span>
+        </div>
+        <div class="dev-progress-wrapper">
+          <div class="dev-progress-label">Yashwanth Progress</div>
+          <div class="progress" style="height: 6px;">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              style="width: 0%;"
+              data-dev-progress="yashwanth"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+            <tr>
+              <th>Status</th>
+              <th>Task</th>
+              <th class="col-week">Week</th>
+              <th class="col-day">Day</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Week 1 -->
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Setup Django project &amp; MySQL</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 1</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Create apps (accounts, farmer, adminpanel, recommendation)</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 2</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Create <strong>User</strong> &amp; <strong>FarmerProfile</strong> models + migrations</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 3</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Crop, Region, Season models + admin register</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 4</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>CropPlan model + relations</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 5</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Field validations + DB constraints</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 6</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Code cleanup &amp; review</td>
+              <td class="col-week"><span class="week-label week-1">Week 1</span></td>
+              <td class="col-day">Day 7</td>
+            </tr>
+
+            <!-- Week 2 -->
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Authentication backend (login, register)</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 8</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Farmer dashboard backend logic</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 9</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Save crop plan logic</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 10</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>List/Create crop plan API endpoints</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 11</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Add permission checks (farmer vs admin)</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 12</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Backend unit tests</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 13</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>API documentation draft</td>
+              <td class="col-week"><span class="week-label week-2">Week 2</span></td>
+              <td class="col-day">Day 14</td>
+            </tr>
+
+            <!-- Week 3 -->
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Optimize DB queries</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 15</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Improve dashboard data query performance</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 16</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Pagination for long lists</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 17</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Farmer profile edit backend</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 18</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Server-side validation improvements</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 19</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Secure admin-only routes</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 20</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Feature freeze review</td>
+              <td class="col-week"><span class="week-label week-3">Week 3</span></td>
+              <td class="col-day">Day 21</td>
+            </tr>
+
+            <!-- Week 4 -->
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Bug fixes</td>
+              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
+              <td class="col-day">Day 22</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Create 404 &amp; 500 error pages</td>
+              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
+              <td class="col-day">Day 23</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>DB backup test</td>
+              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
+              <td class="col-day">Day 24</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Code refactor</td>
+              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
+              <td class="col-day">Day 25</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Write full API docs</td>
+              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
+              <td class="col-day">Day 26</td>
+            </tr>
+            <tr>
+              <td><span class="status-pill status-todo" data-status="todo">To-Do</span></td>
+              <td>Final fixes + review</td>
+              <td class="col-week"><span class="week-label week-4">Week 4</span></td>
+              <td class="col-day">Day 27–30</td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shashana page (Frontend) -->
+  <div class="dev-page" data-dev="shashana">
+    <!-- … keep exactly the Shashana block you pasted earlier … -->
+    <!-- (all her Week 1–4 tasks, same structure as above) -->
+  </div>
+
+  <!-- Lakshman page (DevOps + Recommendation) -->
+  <div class="dev-page" data-dev="lakshman">
+    <!-- … keep exactly the Lakshman block you pasted earlier … -->
+    <!-- (all his Week 1–4 tasks) -->
+  </div>
+
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Status click logic + dev switch + progress bars -->
+<!-- Status logic + dev switch + localStorage + progress bars -->
 <script>
   (function () {
     const order = ["todo", "progress", "review", "done"];
@@ -431,6 +638,24 @@
       "review": "Review",
       "done": "Done"
     };
+
+    const STORAGE_KEY = "farmer_board_statuses_v1";
+    let saved = {};
+    try {
+      saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      saved = {};
+    }
+
+    const allPills = Array.from(document.querySelectorAll(".status-pill"));
+    allPills.forEach((pill, index) => {
+      const key = "t" + index;
+      pill.dataset.key = key;
+
+      if (saved[key]) {
+        updateClass(pill, saved[key]);
+      }
+    });
 
     function updateClass(el, newStatus) {
       el.classList.remove("status-todo", "status-progress", "status-review", "status-done");
@@ -481,13 +706,20 @@
       }
     }
 
-    // Click to cycle status
-    document.querySelectorAll(".status-pill").forEach(el => {
+    // Click to cycle status + save
+    allPills.forEach(el => {
       el.addEventListener("click", () => {
         const current = el.dataset.status || "todo";
         const idx = order.indexOf(current);
         const next = order[(idx + 1) % order.length];
         updateClass(el, next);
+
+        const key = el.dataset.key;
+        if (key) {
+          saved[key] = next;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        }
+
         recalcProgress();
       });
     });
@@ -513,7 +745,7 @@
       });
     });
 
-    // Optional: show Vinay by default
+    // Show Vinay by default
     const firstBtn = document.querySelector('.dev-switch[data-dev="vinay"]');
     const firstPage = document.querySelector('.dev-page[data-dev="vinay"]');
     if (firstBtn && firstPage) {
