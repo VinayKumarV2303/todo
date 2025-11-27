@@ -1,16 +1,5 @@
-from rest_framework import viewsets, filters
-from .models import Task
-from .serializers import TaskSerializer
+# board/views.py
+from django.shortcuts import render
 
-class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ["week", "day", "developer"]
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        developer = self.request.query_params.get("developer")
-        if developer:
-            qs = qs.filter(developer=developer)
-        return qs
+def board_view(request):
+    return render(request, "board.html")  # this will look for templates/board.html
