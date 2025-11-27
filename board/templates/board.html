@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farmer App - Task Assignment Board</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    body { background: #f5f7fb; }
+    header { box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+    .dev-role { font-size: 0.85rem; color: #666; }
+    .dev-badge { font-size: 0.75rem; }
+
+    .status-pill {
+      cursor: pointer;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .status-todo {
+      background: #fff4e5; color: #b86800; border-color: #ffe0b3;
+    }
+    .status-progress {
+      background: #e6f0ff; color: #2556b3; border-color: #c2d6ff;
+    }
+    .status-review {
+      background: #fff0f4; color: #b3255b; border-color: #ffc2d6;
+    }
+    .status-done {
+      background: #e6f7ed; color: #207544; border-color: #bde6c8;
+      text-decoration: line-through;
+    }
+
+    .week-label {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .week-1 { background: #e7f1ff; color: #245b9e; }
+    .week-2 { background: #e5f7ef; color: #1a7a4a; }
+    .week-3 { background: #fff2e0; color: #b86800; }
+    .week-4 { background: #f4e9ff; color: #6b2ca8; }
+
+    .card { border-radius: 12px; }
+    .card-header { border-radius: 12px 12px 0 0 !important; }
+    table { font-size: 0.8rem; }
+
+    .dev-page { display: none; }
+    .dev-page.active { display: block; }
+
+    .dev-progress-wrapper { margin-top: 0.5rem; }
+    .dev-progress-label { font-size: 0.75rem; color: #555; margin-bottom: 0.15rem; }
+    .project-progress-card { border-radius: 12px; }
+
+    @media (max-width: 768px) {
+      .col-week, .col-day { display: none; }
+    }
+  </style>
+</head>
+<body>
+<header class="bg-primary text-white py-3 mb-4">
+  <div class="container">
+    <h1 class="h3 mb-1">Farmer App – Task Assignment Board</h1>
+    <p class="mb-0 small">
+      4-Week Plan · Developers:
+      Vinay (Admin) ·
+      Yashwanth (Backend) ·
+      Shashana (Frontend) ·
+      Lakshman (DevOps)
+    </p>
+  </div>
+</header>
+
+<div class="container mb-5">
+
+  <!-- Overall project progress -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0 project-progress-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="fw-semibold">Overall Project Progress</span>
+            <span id="project-progress-text" class="small text-muted">0%</span>
+          </div>
+          <div class="progress" style="height: 10px;">
+            <div
+              class="progress-bar"
+              id="project-progress"
+              role="progressbar"
+              style="width: 0%;"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Developer selector -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="btn-group w-100" role="group">
+        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="vinay">
+          👨‍💻 Vinay (Admin)
+        </button>
+        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="yashwanth">
+          🧑‍💻 Yashwanth (Backend)
+        </button>
+        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="shashana">
+          🎨 Shashana (Frontend)
+        </button>
+        <button type="button" class="btn btn-outline-primary dev-switch" data-dev="lakshman">
+          🤖 Lakshman (DevOps)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vinay -->
+  <div class="dev-page" data-dev="vinay">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-bold">👨‍💻 Vinay</div>
+            <div class="dev-role">Admin · Panel & Analytics</div>
+          </div>
+          <span class="badge text-bg-primary dev-badge">Admin Panel</span>
+        </div>
+        <div class="dev-progress-wrapper">
+          <div class="dev-progress-label">Vinay Progress</div>
+          <div class="progress" style="height: 6px;">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              style="width: 0%;"
+              data-dev-progress="vinay"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Task</th>
+                <th class="col-week">Week</th>
+                <th class="col-day">Day</th>
+              </tr>
+            </thead>
+            <tbody data-dev-body="vinay">
+              <!-- Filled by JS from API -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Yashwanth -->
+  <div class="dev-page" data-dev="yashwanth">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-bold">🧑‍💻 Yashwanth</div>
+            <div class="dev-role">Backend · Django & MySQL</div>
+          </div>
+          <span class="badge text-bg-info dev-badge">Backend</span>
+        </div>
+        <div class="dev-progress-wrapper">
+          <div class="dev-progress-label">Yashwanth Progress</div>
+          <div class="progress" style="height: 6px;">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              style="width: 0%;"
+              data-dev-progress="yashwanth"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Task</th>
+                <th class="col-week">Week</th>
+                <th class="col-day">Day</th>
+              </tr>
+            </thead>
+            <tbody data-dev-body="yashwanth">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shashana -->
+  <div class="dev-page" data-dev="shashana">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-bold">🎨 Shashana</div>
+            <div class="dev-role">Frontend · UI/UX</div>
+          </div>
+          <span class="badge text-bg-success dev-badge">Frontend</span>
+        </div>
+        <div class="dev-progress-wrapper">
+          <div class="dev-progress-label">Shashana Progress</div>
+          <div class="progress" style="height: 6px;">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              style="width: 0%;"
+              data-dev-progress="shashana"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Task</th>
+                <th class="col-week">Week</th>
+                <th class="col-day">Day</th>
+              </tr>
+            </thead>
+            <tbody data-dev-body="shashana">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lakshman -->
+  <div class="dev-page" data-dev="lakshman">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-bold">🤖 Lakshman</div>
+            <div class="dev-role">DevOps · Recommendation Engine</div>
+          </div>
+          <span class="badge text-bg-warning dev-badge">DevOps</span>
+        </div>
+        <div class="dev-progress-wrapper">
+          <div class="dev-progress-label">Lakshman Progress</div>
+          <div class="progress" style="height: 6px;">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              style="width: 0%;"
+              data-dev-progress="lakshman"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Task</th>
+                <th class="col-week">Week</th>
+                <th class="col-day">Day</th>
+              </tr>
+            </thead>
+            <tbody data-dev-body="lakshman">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function () {
+  const API_BASE = "/api/tasks/";  // change if your API path differs
+
+  const order = ["todo", "progress", "review", "done"];
+  const labels = {
+    "todo": "To-Do",
+    "progress": "In Progress",
+    "review": "Review",
+    "done": "Done"
+  };
+
+  function statusClass(status) {
+    return {
+      "todo": "status-todo",
+      "progress": "status-progress",
+      "review": "status-review",
+      "done": "status-done"
+    }[status] || "status-todo";
+  }
+
+  function weekLabelClass(week) {
+    if (week === 1) return "week-1";
+    if (week === 2) return "week-2";
+    if (week === 3) return "week-3";
+    if (week === 4) return "week-4";
+    return "week-1";
+  }
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  function updateClass(el, newStatus) {
+    el.classList.remove("status-todo", "status-progress", "status-review", "status-done");
+    el.classList.add(statusClass(newStatus));
+    el.textContent = labels[newStatus];
+    el.dataset.status = newStatus;
+  }
+
+  function recalcProgress() {
+    const devPages = document.querySelectorAll(".dev-page");
+    let totalAll = 0;
+    let doneAll = 0;
+
+    devPages.forEach(page => {
+      const dev = page.dataset.dev;
+      const pills = page.querySelectorAll(".status-pill");
+      const total = pills.length;
+      let done = 0;
+
+      pills.forEach(p => {
+        const st = p.dataset.status || "todo";
+        if (st === "done") done++;
+      });
+
+      totalAll += total;
+      doneAll += done;
+
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      const bar = document.querySelector('.progress-bar[data-dev-progress="' + dev + '"]');
+      if (bar) {
+        bar.style.width = percent + "%";
+        bar.setAttribute("aria-valuenow", percent);
+        bar.textContent = percent + "%";
+      }
+    });
+
+    const projectPercent = totalAll ? Math.round((doneAll / totalAll) * 100) : 0;
+    const projBar = document.getElementById("project-progress");
+    const projText = document.getElementById("project-progress-text");
+    if (projBar) {
+      projBar.style.width = projectPercent + "%";
+      projBar.setAttribute("aria-valuenow", projectPercent);
+    }
+    if (projText) projText.textContent = projectPercent + "%";
+  }
+
+  function renderTasks(tasks) {
+    // Clear all bodies
+    document.querySelectorAll("tbody[data-dev-body]").forEach(tb => tb.innerHTML = "");
+
+    const byDev = {
+      vinay: [],
+      yashwanth: [],
+      shashana: [],
+      lakshman: [],
+    };
+
+    tasks.forEach(t => {
+      if (byDev[t.developer]) byDev[t.developer].push(t);
+    });
+
+    Object.keys(byDev).forEach(dev => {
+      const tbody = document.querySelector('tbody[data-dev-body="' + dev + '"]');
+      if (!tbody) return;
+      const list = byDev[dev].sort((a, b) => {
+        if (a.week === b.week) return a.day - b.day;
+        return a.week - b.week;
+      });
+
+      list.forEach(task => {
+        const tr = document.createElement("tr");
+
+        const tdStatus = document.createElement("td");
+        const pill = document.createElement("span");
+        pill.classList.add("status-pill", statusClass(task.status));
+        pill.textContent = labels[task.status] || "To-Do";
+        pill.dataset.status = task.status;
+        pill.dataset.taskId = task.id;
+        tdStatus.appendChild(pill);
+
+        const tdTitle = document.createElement("td");
+        tdTitle.textContent = task.title;
+
+        const tdWeek = document.createElement("td");
+        tdWeek.classList.add("col-week");
+        const spanWeek = document.createElement("span");
+        spanWeek.classList.add("week-label", weekLabelClass(task.week));
+        spanWeek.textContent = "Week " + task.week;
+        tdWeek.appendChild(spanWeek);
+
+        const tdDay = document.createElement("td");
+        tdDay.classList.add("col-day");
+        tdDay.textContent = "Day " + task.day;
+
+        tr.appendChild(tdStatus);
+        tr.appendChild(tdTitle);
+        tr.appendChild(tdWeek);
+        tr.appendChild(tdDay);
+
+        tbody.appendChild(tr);
+      });
+    });
+
+    recalcProgress();
+  }
+
+  function loadTasks() {
+    fetch(API_BASE)
+      .then(r => r.json())
+      .then(data => {
+        renderTasks(data);
+      })
+      .catch(err => {
+        console.error("Error loading tasks:", err);
+      });
+  }
+
+  // Event delegation for status pills (because they are created dynamically)
+  document.addEventListener("click", function (e) {
+    const el = e.target.closest(".status-pill");
+    if (!el) return;
+
+    const current = el.dataset.status || "todo";
+    const idx = order.indexOf(current);
+    const next = order[(idx + 1) % order.length];
+    const taskId = el.dataset.taskId;
+    if (!taskId) return;
+
+    // Optimistic UI update
+    updateClass(el, next);
+    recalcProgress();
+
+    // Send PATCH to API
+    fetch(API_BASE + taskId + "/", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),  // if using SessionAuth
+      },
+      body: JSON.stringify({ status: next }),
+    }).then(r => {
+      if (!r.ok) {
+        console.error("Failed to update on server");
+        // Optional: revert UI if you want
+      }
+    }).catch(err => {
+      console.error("Error updating task:", err);
+    });
+  });
+
+  // Developer switch buttons
+  const devButtons = document.querySelectorAll(".dev-switch");
+  const devPages = document.querySelectorAll(".dev-page");
+
+  devButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const dev = btn.dataset.dev;
+      devButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      devPages.forEach(page => {
+        if (page.dataset.dev === dev) {
+          page.classList.add("active");
+        } else {
+          page.classList.remove("active");
+        }
+      });
+    });
+  });
+
+  // Default: open Vinay
+  const firstBtn = document.querySelector('.dev-switch[data-dev="vinay"]');
+  const firstPage = document.querySelector('.dev-page[data-dev="vinay"]');
+  if (firstBtn && firstPage) {
+    firstBtn.classList.add("active");
+    firstPage.classList.add("active");
+  }
+
+  // Initial load
+  loadTasks();
+})();
+</script>
+
+</body>
+</html>
