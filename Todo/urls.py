@@ -9,6 +9,6 @@ router.register(r"tasks", TaskViewSet, basename="task")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(router.urls)),
-    path("", include("board.urls")),   # renders board_page -> board.html
+    path("api/", include(router.urls)),   # /api/tasks/, /api/tasks/<id>/
+    path("", include("board.urls")),      # board_page -> board.html
 ]

@@ -547,19 +547,49 @@
       }
     }
 
-    async function updateTaskStatusOnServer(taskId, newStatusApi) {
-      if (!taskId) return;
+    // 🔥 Create or update task in DB
+    async function saveTaskToServer(memberId, task) {
+      const apiStatus = STATUS_LABEL_TO_API[task.status] || "todo";
+
       try {
-        await fetch(`${API_BASE}${taskId}/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: JSON.stringify({ status: newStatusApi }),
-        });
+        if (task.apiId) {
+          // UPDATE existing task
+          await fetch(`${API_BASE}${task.apiId}/`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+              status: apiStatus,
+              day: task.day,
+            }),
+          });
+        } else {
+          // CREATE new task on first click
+          const res = await fetch(API_BASE, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+              title: task.title,
+              assignee: memberId,
+              status: apiStatus,
+              day: task.day,
+            }),
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            task.apiId = data.id; // store id for future PATCH
+          } else {
+            console.error("Failed to create task:", await res.text());
+          }
+        }
       } catch (err) {
-        console.error("Failed to update task on server:", err);
+        console.error("Error saving task:", err);
       }
     }
 
@@ -735,8 +765,8 @@
           progressFill.style.width = newProgress + "%";
           labelRight.textContent = `${newProgress}% complete`;
 
-          const apiStatus = STATUS_LABEL_TO_API[task.status] || "todo";
-          await updateTaskStatusOnServer(task.apiId, apiStatus);
+          // 💾 auto create / update in DB
+          await saveTaskToServer(member.id, task);
         });
 
         statusTd.appendChild(btn);
