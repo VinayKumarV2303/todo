@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import task_list, update_task_status
+from .views import board_page
 
 urlpatterns = [
-    path("api/tasks/", task_list, name="task-list"),
-    path("api/tasks/<int:task_id>/status/", update_task_status, name="update-task-status"),
+    path("", board_page, name="board"),
 ]

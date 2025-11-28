@@ -24,14 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "") == "1"
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    "todo-il2c.onrender.com",
+AALLOWED_HOSTS = [
+    "todo-il2c.onrender.com"
     "127.0.0.1",
     "localhost",
 ]
-
 
 CSRF_TRUSTED_ORIGINS = [
     "https://todo-il2c.onrender.com",

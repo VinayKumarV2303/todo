@@ -1,15 +1,21 @@
-# board/views.py
+from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import Task
 from .serializers import TaskSerializer
 
 
-@method_decorator(csrf_exempt, name="dispatch")   # ❗ disable CSRF just for this API
+# 👇 This view just renders your board.html template
+def board_page(request):
+    return render(request, "board.html")
+
+
 class TaskViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for tasks used by the board.html UI.
+    Frontend sends GET /api/tasks/ and PATCH /api/tasks/<id>/
+    """
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [AllowAny]              # ❗ allow front-end to PATCH without login
+    permission_classes = [AllowAny]  # okay for your internal project
